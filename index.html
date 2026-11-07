@@ -1,0 +1,24 @@
+<!doctype html>
+<!-- Mapa de la costa de Rocha — Matías Nicolás Echeveste Cardozo -->
+<html lang="es-UY">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Matías Nicolás Echeveste Cardozo" />
+    <title>Mapa de la costa de Rocha</title>
+  </head>
+  <body>
+    <aside aria-label="Panel de lugares">
+      <h1>Costa de Rocha</h1>
+      <label class="buscador">Buscar <input id="buscar" type="search" placeholder="Nombre o localidad" /></label>
+      <fieldset id="filtros"><legend>Categorías</legend></fieldset>
+      <button id="cercanos" type="button">Lugares cerca de mí</button>
+      <p id="resultado-cercanos" aria-live="polite"></p>
+      <p id="conteo" class="suave"></p>
+      <ul id="lista"></ul>
+      <p class="suave nota">Ubicaciones aproximadas. Mapa base © OpenStreetMap, OpenFreeMap.</p>
+    </aside>
+    <main id="mapa" aria-label="Mapa"></main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "mapa-costa-maplibre",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Mapa interactivo de la costa de Rocha con MapLibre GL JS, GeoJSON y TypeScript",
+  "author": "Matías Nicolás Echeveste Cardozo",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "maplibre-gl": "^6.16.0"
+  },
+  "devDependencies": {
+    "@types/geojson": "^7946.0.16",
+    "@types/node": "^22.20.5",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.6",
+    "vitest": "^5.1.0"
+  }
+}

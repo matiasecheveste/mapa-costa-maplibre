@@ -1,0 +1,21 @@
+/* Mapa de la costa de Rocha — Matías Nicolás Echeveste Cardozo */
+:root { color-scheme: light dark; --fondo: #fff; --texto: #0f172a; --suave: #64748b; --borde: #e2e8f0; font-family: system-ui, sans-serif; }
+@media (prefers-color-scheme: dark) { :root { --fondo: #0f172a; --texto: #e2e8f0; --suave: #94a3b8; --borde: #1e293b; } }
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { display: grid; grid-template-columns: 320px 1fr; background: var(--fondo); color: var(--texto); }
+@media (max-width: 720px) { body { grid-template-columns: 1fr; grid-template-rows: 45vh 1fr; } aside { order: 2; } }
+aside { overflow-y: auto; padding: 16px; border-right: 1px solid var(--borde); }
+h1 { margin: 0 0 12px; font-size: 1.3rem; }
+#mapa { min-height: 300px; }
+.buscador { display: grid; gap: 4px; margin-bottom: 12px; }
+input[type='search'], button { font: inherit; color: inherit; background: var(--fondo); border: 1px solid var(--borde); border-radius: 8px; padding: 8px 10px; }
+fieldset { border: 1px solid var(--borde); border-radius: 8px; display: grid; gap: 6px; margin: 0 0 12px; }
+fieldset label { border-left: 4px solid var(--color); padding-left: 6px; }
+#cercanos { width: 100%; cursor: pointer; }
+.suave { color: var(--suave); font-size: .9rem; }
+#lista { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+#lista button { width: 100%; text-align: left; border-left: 4px solid var(--color); cursor: pointer; }
+.nota { margin-top: 16px; font-size: .8rem; }
+.maplibregl-popup-content { color: #0f172a; max-width: 240px; }
+.maplibregl-popup-content p { margin: 4px 0 0; }
