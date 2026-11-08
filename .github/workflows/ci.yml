@@ -18,3 +18,5 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+      - name: El worker de MapLibre se publica junto al sitio
+        run: ls dist/assets/maplibre-gl-worker-*.mjs

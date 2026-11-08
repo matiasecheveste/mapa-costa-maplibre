@@ -5,6 +5,7 @@
 import * as maplibregl from 'maplibre-gl'
 import type { GeoJSONSource, MapLayerMouseEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
+import urlTrabajador from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url'
 import datos from './datos/lugares.geojson?raw'
 import { CATEGORIAS, envolvente, filtrar, formatoDistancia, masCercanos, type Categoria, type Lugar, type Lugares } from './geo'
 import './estilos.css'
@@ -12,6 +13,9 @@ import './estilos.css'
 const LUGARES = JSON.parse(datos) as Lugares
 const activas = new Set(Object.keys(CATEGORIAS) as Categoria[])
 let texto = ''
+
+// MapLibre 6 carga su worker como archivo aparte: se publica con el resto del sitio y se le indica la ruta.
+maplibregl.setWorkerUrl(urlTrabajador)
 
 const mapa = new maplibregl.Map({
   container: 'mapa',
@@ -45,7 +49,7 @@ mapa.on('load', () => {
     type: 'symbol',
     source: 'lugares',
     filter: ['has', 'point_count'],
-    layout: { 'text-field': ['get', 'point_count_abbreviated'], 'text-size': 13 },
+    layout: { 'text-field': ['get', 'point_count_abbreviated'], 'text-size': 13, 'text-font': ['Noto Sans Bold'] },
     paint: { 'text-color': '#ffffff' },
   })
   mapa.addLayer({
@@ -105,7 +109,20 @@ function actualizar() {
       return item
     }),
   )
-  document.getElementById('conteo')!.textContent = `${visibles.features.length} lugares`
+  const n = visibles.features.length
+  document.getElementById('conteo')!.textContent =
+    n === 0 ? 'Ningún lugar coincide con la búsqueda.' : `${n} ${n === 1 ? 'lugar' : 'lugares'}`
+  return visibles
+}
+
+// Al buscar, el mapa se ajusta a los resultados (con una pequeña espera para no moverlo en cada tecla).
+let espera: ReturnType<typeof setTimeout> | undefined
+function encuadrar(visibles: Lugares) {
+  clearTimeout(espera)
+  espera = setTimeout(() => {
+    const caja = envolvente(visibles.features.length ? visibles : LUGARES)
+    if (caja) mapa.fitBounds(caja, { padding: 64, maxZoom: 12 })
+  }, 400)
 }
 
 const filtros = document.getElementById('filtros')!
@@ -124,7 +141,7 @@ for (const [clave, { nombre, color }] of Object.entries(CATEGORIAS)) {
 
 document.getElementById('buscar')!.addEventListener('input', (e) => {
   texto = (e.target as HTMLInputElement).value
-  actualizar()
+  encuadrar(actualizar())
 })
 
 document.getElementById('cercanos')!.addEventListener('click', () => {
